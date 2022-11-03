@@ -5,22 +5,24 @@ pub struct Player {
     number: i8,
     speed: f32,
     pos: Vec2,
-    color: Color
+    color: Color,
+    rot: f32,
 }
 
 impl Player {
     pub fn new(player_number: i8, player_pos: Vec2, player_color: Color) -> Self {
         Self {
             rect: Rect::new(
-                0f32,
-                0f32,
-                100f32,
-                100f32
+                0.0,
+                0.0,
+                100.0,
+                100.0
             ),
             number: player_number,
             speed: 7.0,
             pos: player_pos,
-            color: player_color
+            color: player_color,
+            rot: 0,
         }
     }
 
@@ -58,22 +60,27 @@ impl Player {
     }
 
     pub fn collision(&mut self) {
-        if self.pos.x < 0f32 {
-            self.pos.x = 0f32;
+        if self.pos.x < 0.0 {
+            self.pos.x = 0.0;
         }
         else if self.pos.x > screen_width() - self.rect.w {
             self.pos.x = screen_width() - self.rect.w;
         }
-        if self.pos.y < 0f32 {
-            self.pos.y = 0f32;
+        if self.pos.y < 0.0 {
+            self.pos.y = 0.0;
         }
         else if self.pos.y > screen_height() - self.rect.h {
             self.pos.y = screen_height() - self.rect.h;
         }
     }
 
-    pub fn update(&mut self, dt: f32) {
+    pub fn rotation(mut self, m_pos: Vec2) {
+        // pass
+    }
+
+    pub fn update(&mut self, dt: f32, m_pos: Vec2) {
         self.movement(dt);
+        self.rotation(m_pos);
         self.collision();
         draw_rectangle(self.rect.x, self.rect.y, self.rect.w, self.rect.h, self.color);
     }
