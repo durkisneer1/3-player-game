@@ -5,10 +5,11 @@ pub struct Player {
     rect: Rect,
     number: i8,
     speed: f32,
-    pos: Vec2,
+    pub pos: Vec2,
     rot: f32,
     img: Texture2D,
     color: Color,
+    direction: Vec2,
 }
 
 impl Player {
@@ -26,36 +27,49 @@ impl Player {
             rot: 0.0,
             img: player_img,
             color: player_color,
+            direction: Vec2{x: 0.0, y: 0.0},
         }
     }
 
     pub fn movement(&mut self, dt: f32) {
+        if self.direction.length() != 0.0 {
+            self.direction = self.direction.normalize();
+        }
+        self.pos += self.direction * self.speed * dt;
+
         if self.number == 1 {
             if is_key_down(KeyCode::D) {
-                self.pos.x += self.speed * dt;
+                self.direction.x = 1.0;
+            } else if is_key_down(KeyCode::A) {
+                self.direction.x = -1.0;
+            } else {
+                self.direction.x = 0.0;
             }
-            if is_key_down(KeyCode::A) {
-                self.pos.x -= self.speed * dt;
-            }
+
             if is_key_down(KeyCode::W) {
-                self.pos.y -= self.speed * dt;
-            }
-            if is_key_down(KeyCode::S) {
-                self.pos.y += self.speed * dt;
+                self.direction.y = -1.0;
+            } else if is_key_down(KeyCode::S) {
+                self.direction.y = 1.0;
+            } else {
+                self.direction.y = 0.0;
             }
         }
+
         else if self.number == 2 {
             if is_key_down(KeyCode::Right) {
-                self.pos.x += self.speed * dt;
+                self.direction.x = 1.0;
+            } else if is_key_down(KeyCode::Left) {
+                self.direction.x = -1.0;
+            } else {
+                self.direction.x = 0.0;
             }
-            if is_key_down(KeyCode::Left) {
-                self.pos.x -= self.speed * dt;
-            }
+
             if is_key_down(KeyCode::Up) {
-                self.pos.y -= self.speed * dt;
-            }
-            if is_key_down(KeyCode::Down) {
-                self.pos.y += self.speed * dt;
+                self.direction.y = -1.0;
+            } else if is_key_down(KeyCode::Down) {
+                self.direction.y = 1.0;
+            } else {
+                self.direction.y = 0.0;
             }
         }
     }
