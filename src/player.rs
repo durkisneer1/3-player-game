@@ -22,7 +22,7 @@ impl Player {
                 100.0
             ),
             number: player_number,
-            speed: 7.0,
+            speed: 6.0,
             pos: player_pos,
             rot: 0.0,
             img: player_img,
@@ -90,9 +90,7 @@ impl Player {
     }
 
     pub fn rotation(&mut self, m_pos: Vec2) {
-        let adj = m_pos.x - self.pos.x;
-        let opp = m_pos.y - self.pos.y;
-        self.rot = atan2f(opp, adj);
+        self.rot = atan2f(m_pos.y - self.pos.y, m_pos.x - self.pos.x);
     }
 
     pub fn update(&mut self, dt: f32, m_pos: Vec2) {
