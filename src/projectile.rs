@@ -1,4 +1,4 @@
-use libm::*;
+use libm::{atan2f, cosf, sinf};
 use macroquad::prelude::*;
 
 pub struct Bullet {

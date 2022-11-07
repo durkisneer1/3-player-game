@@ -11,7 +11,7 @@ async fn main() {
     let mut enemies = Vec::new();
 
     let player_texture: Texture2D = load_texture("res/player.png").await.unwrap();
-    let enemy_texture: Texture2D = load_texture("res/zombie.png").await.unwrap();
+    let enemy_texture: Texture2D = load_texture("res/zombie/0.png").await.unwrap();
 
     let mut player1 = player::Player::new(1,
                                           Vec2{x: 0.0, y: 0.0},
