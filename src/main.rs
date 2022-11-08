@@ -22,6 +22,8 @@ async fn main() {
                                           player_texture,
                                           BLUE);
 
+    let default_enemy = enemy::Enemy::new(Vec2{x: 0.0, y: 0.0}, enemy_texture).await;
+    
     loop {
         let dt = get_frame_time() * 100.0;
         let m_pos = cursor::cursor_player();
@@ -34,7 +36,7 @@ async fn main() {
             bullets.push(projectile::Bullet::new(player2.pos, m_pos));
         }
         if is_mouse_button_pressed(MouseButton::Right) {
-            enemies.push(enemy::Enemy::new(Vec2{x: 0.0, y: 0.0}, enemy_texture));
+            enemies.push(default_enemy.clone());
         }
 
         clear_background(WHITE);
