@@ -4,7 +4,7 @@ use libm::{atan2f};
 
 #[derive(Clone)]
 pub struct Enemy {
-    rect: Rect,
+    pub rect: Rect,
     speed: f32,
     pub pos: Vec2,
     rot: f32,
@@ -22,8 +22,8 @@ impl Enemy {
             rect: Rect::new(
                 0.0,
                 0.0,
-                100.0,
-                100.0
+                80.0,
+                80.0
             ),
             speed: 3.0,
             pos: enemy_pos,
@@ -32,7 +32,7 @@ impl Enemy {
             direction: Vec2{x: 0.0, y: 0.0},
             frame_list,
             current_frame: 0.0,
-            animation_speed: 0.2,
+            animation_speed: 0.1,
         }
     }
 
@@ -61,6 +61,7 @@ impl Enemy {
             self.direction = self.direction.normalize();
         }
         self.pos += self.direction * self.speed * dt;
+        (self.rect.x, self.rect.y) = (self.pos.x, self.pos.y);
 
         self.direction.y = destination_pos.y - self.pos.y;
         self.direction.x = destination_pos.x - self.pos.x;
@@ -76,8 +77,8 @@ impl Enemy {
         self.movement(dt, player_pos);
         draw_texture_ex(
             self.img,
-            self.pos.x - (self.rect.w / 2.0),
-            self.pos.y - (self.rect.h / 2.0),
+            self.pos.x,
+            self.pos.y,
             WHITE,
             DrawTextureParams {
                 dest_size: Some(vec2(self.rect.w, self.rect.h)),

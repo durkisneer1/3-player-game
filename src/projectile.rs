@@ -2,17 +2,23 @@ use libm::{atan2f, cosf, sinf};
 use macroquad::prelude::*;
 
 pub struct Bullet {
-    pub current_pos: Vec2,
+    pub rect: Rect,
     x_vel: f32,
     y_vel: f32,
 }
 
 impl Bullet {
     pub fn new(player_pos: Vec2, mouse_pos: Vec2) -> Self {
-        let speed: f32 = 10.0;
+        let speed: f32 = 8.0;
         let (x_vel, y_vel) = Bullet::direction(player_pos,mouse_pos, speed);
+        let (x, y) = (player_pos.x, player_pos.y);
         Self {
-            current_pos: player_pos,
+            rect: Rect::new(
+                x,
+                y,
+                10.0,
+                10.0
+            ),
             x_vel,
             y_vel,
         }
@@ -26,8 +32,8 @@ impl Bullet {
     }
 
     pub fn movement(&mut self) {
-        self.current_pos.x -= self.x_vel;
-        self.current_pos.y -= self.y_vel;
-        draw_circle(self.current_pos.x, self.current_pos.y, 5.0, GREEN)
+        self.rect.x -= self.x_vel;
+        self.rect.y -= self.y_vel;
+        draw_circle(self.rect.x, self.rect.y, self.rect.w / 2.0, DARKGREEN)
     }
 }
